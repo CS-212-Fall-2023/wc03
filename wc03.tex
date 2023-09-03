@@ -1,0 +1,48 @@
+\documentclass[a4paper]{exam}
+
+\usepackage{amsmath,amssymb, amsthm}
+\usepackage[a4paper]{geometry}
+\usepackage{hyperref}
+\usepackage{mdframed}
+
+\title{Weekly Challenge 03: Closure of Regular Languages}
+\author{CS 212 Nature of Computation\\Habib University}
+\date{Fall 2023}
+
+\qformat{{\large\bf \thequestion. \thequestiontitle}\hfill}
+\boxedpoints
+
+\printanswers
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+  
+\titledquestion{Operation F}
+
+  Let us define a unary operation, $F$, on languages as follows.
+  
+  \begin{mdframed}
+    $F(L) = \{ f(w) \mid w\in L\}$ where, given
+    \begin{itemize}
+    \item $w=w_1w_2w_3\ldots w_n$, and
+    \item each $w_i\in\Sigma$,
+    \end{itemize}
+    $f(w) = w_nw_{n-1}w_{n-2}\ldots w_1$.
+  \end{mdframed}
+
+  Prove or disprove that the class of regular languages is closed under $F$.
+
+  % Uncomment below to enter your solution.
+  % \begin{solution}
+    
+  % \end{solution}
+  
+\end{questions}
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
