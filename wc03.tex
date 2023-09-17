@@ -12,6 +12,9 @@
 \qformat{{\large\bf \thequestion. \thequestiontitle}\hfill}
 \boxedpoints
 
+\usepackage{draftwatermark}
+\SetWatermarkText{Sample Solution}
+\SetWatermarkScale{3}
 \printanswers
 
 \begin{document}
@@ -35,9 +38,50 @@
   Prove or disprove that the class of regular languages is closed under $F$.
 
   % Uncomment below to enter your solution.
-  % \begin{solution}
+  \begin{solution}
+    We have to show that if $L$ is regular, then so is $F(L)$. We observe that $f(w)$ is the reverse string of $w$. So, $F(L)$ contains strings that are the reverse of the strings in $L$. It is also useful to note that $w=f(f(w))$.
     
-  % \end{solution}
+    \begin{proof}
+      We provide a proof by construction. That is, starting with the NFA, $N_1$, that accepts $L$, we build an NFA, $N_2$, that accepts $F(L)$. We do so by inverting the transitions in $N_1$, and swapping the status of its start and final states. A mechanism will be needed in $N_2$ for multiple start states, and care is required for the case when the start state in $N_1$ is also a final state.\\
+      
+      Let $N_1 = (Q,\Sigma_\epsilon,\delta_1,q_1, F_1)$.\\
+      Define $N_2 = (Q\cup \{q_2\},\Sigma_\epsilon,\delta_2,q_2, F_2)$ such that:
+      \begin{enumerate}
+      \item $F_2=\{ q_1\}$.\\
+        \textit{the start state of $N_1$ is the final state of $N_2$.}
+      \item $\forall q\in F_1\; (\delta_2(q_2,\epsilon) = q)$.\\
+        \textit{$q_2$ is an additional state in $N_2$. It is the start state with $\epsilon$-transitions to the states that were final in $N_1$.}
+      \item $\forall q_1q_2\in F_1\forall a \in \Sigma_\epsilon\; (q_2\in \delta_1(q_1,a) \implies q_1\in\delta_2(q_2,a))$.\\
+        \textit{invert the transitions of $N_1$ in $N_2$.}
+      \end{enumerate}
+    \end{proof}
+
+    We may also want to prove the correctness of this construction.
+    \begin{proof}
+      Let $L_2$ be the language of $N_2$. We show that $L_2 = F(L)$. That is,
+      \[
+        w\in L_2\implies w\in F(L)\quad \land\quad  w\in F(L)\implies w\in L_2.
+      \]
+      We sketch the proof of each case below.
+
+      \underline{Case 1}: $w\in L_2\implies w\in F(L)$\\
+      Let $w=w_1w_2\ldots w_n$.\\
+      $N_2$ traverses a sequence of states, $\langle r_0,r_1,r_2,\ldots, r_n\rangle $, as it reads $s$ where
+      \begin{itemize}
+      \item $r_0 = q_2$,
+      \item $r_1\in F_1$,
+      \item $r_n = q_1$, and
+      \item $\delta_2(r_i,w_{i+1}) = r_{i+1}$.
+      \end{itemize}
+      Then, $N_1$ traverses the states, $\langle q_1, r_{n-1}, r_{n-2}, \ldots, r_1\rangle$, for the string $w_nw_{n-1}\ldots w_2w_1= f(w)$.\\
+      That is, $N_1$ accepts $f(w)$.\\
+      $\therefore w\in F(L)$.
+      
+      \underline{Case 2}: $w\in F(L)\implies w\in L_2$\\
+      This can be argued similarly to the above case.      
+    \end{proof}
+    
+  \end{solution}
   
 \end{questions}
 \end{document}
